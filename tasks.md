@@ -65,6 +65,7 @@ Mục tiêu: frontend có sidebar lịch sử chat.
 - 3 handler mới: `handleSessionsList`, `handleSessionGet`, `handleSessionDelete`.
 - `matchRoute` thêm route `GET /sessions`, `GET /sessions/:id`, `DELETE /sessions/:id`.
 - `handleStream` thêm `X-Session-Id` vào `writeHead`.
+.
 
 **Smoke test pass:**
 - `GET /sessions` → list đúng order + file_count
