@@ -1,0 +1,3 @@
+namvule.japaneast.cloudapp.azure.com {
+    reverse_proxy claude_code_env:8080
+}

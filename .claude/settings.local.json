@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node *)",
+      "Bash(ls -la /workspace/)",
+      "Bash(find /workspace -name \"server.js\")",
+      "Bash(DB_PATH=/tmp/test-files.sqlite OUTPUT_DIR=/tmp/test-output PORT=0 timeout 3 node -e ' *)",
+      "Bash(npm install *)",
+      "Bash(/tmp/claude-smoke/mock-claude.sh --print --permission-mode bypassPermissions --output-format stream-json --verbose --include-partial-messages --session-id abc \"hello\")",
+      "Read(//tmp/claude-smoke/**)",
+      "Bash(PORT=18080 CLAUDE_BIN=/tmp/srvtest/fake-claude.sh UPLOAD_DIR=/tmp/srvtest/upload OUTPUT_DIR=/tmp/srvtest/output DB_PATH=/tmp/srvtest/db/files.sqlite BOOTSTRAP_USERNAME=admin BOOTSTRAP_PASSWORD=admin API_KEY=test-secret ALLOWED_ORIGINS=* node server.js)",
+      "Bash(echo \"pid=$!\")",
+      "Bash(curl -s http://127.0.0.1:18080/api/v1/health)",
+      "Bash(kill 12723)",
+      "Bash(rm -rf /tmp/srvtest)",
+      "Read(//usr/bin/**)",
+      "Bash(/home/namvule/doc-parser/myenv/bin/python -c \"import doc_parser.server; print\\('module OK'\\)\")",
+      "Bash(claude --version)",
+      "Bash(claude mcp *)",
+      "Bash(bash -n /home/namvule/claude-container/entrypoint.sh)",
+      "Bash(docker compose *)"
+    ]
+  }
+}

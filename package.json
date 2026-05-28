@@ -1,0 +1,15 @@
+{
+  "name": "claude-code-backend",
+  "version": "1.0.0",
+  "description": "HTTP backend that proxies prompts to the Claude Code CLI (streaming + sync).",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "busboy": "^1.6.0"
+  }
+}

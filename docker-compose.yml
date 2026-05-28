@@ -1,0 +1,50 @@
+services:
+  claude-code:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: claude_code_env
+    restart: always
+    environment:
+      - LAIDA_PERMISSION_MODE=auto
+      - API_KEY=${API_KEY}
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
+      - RATE_LIMIT_RPM=${RATE_LIMIT_RPM}
+    volumes:
+      # Chỉ mount các sub-dir Claude được phép thấy. KHÔNG mount cả `.`
+      # để server.js / Dockerfile / repo source không lộ vào /workspace.
+      - ./supportFiles:/workspace/supportFiles
+      - ./output:/workspace/output
+      - ./.db:/workspace/.db
+      - ./CLAUDE.local.md:/workspace/CLAUDE.local.md
+      - claude-data:/home/node/.claude
+      - ~/.claude/.credentials.json:/home/node/.claude/.credentials.json:ro
+      - ~/.claude/skills:/home/node/.claude/skills-ro:ro
+      - ~/.claude/plugins:/home/node/.claude/plugins-ro:ro
+      - ~/.claude/agents:/home/node/.claude/agents-ro:ro
+      - ~/.claude/backups:/home/node/.claude/backups-ro:ro
+      # doc-parser MCP: mount source RO (venv được build container-side ở /opt/doc-parser-venv)
+      - ~/doc-parser:/home/namvule/doc-parser:ro
+      - doc-parser-venv:/opt/doc-parser-venv
+    # Đã XÓA phần ports: - "8080:8080" ở đây
+
+  # THÊM DỊCH VỤ BẢO VỆ CỔNG (CADDY)
+  caddy:
+    image: caddy:2-alpine
+    container_name: caddy_proxy
+    restart: always
+    ports:
+      - "80:80"   # Mở cổng 80 để xin chứng chỉ SSL
+      - "443:443" # Mở cổng 443 để phục vụ HTTPS cho Frontend
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - claude-code
+
+volumes:
+  claude-data:
+  doc-parser-venv:   # Container-owned Python venv cho doc-parser MCP (build 1 lần, cache lại)
+  caddy_data:   # Nơi Caddy lưu trữ chứng chỉ SSL để không phải xin lại khi restart
+  caddy_config:
