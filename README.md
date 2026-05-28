@@ -16,3 +16,6 @@ Start docker container:
     ```
 
 
+run on unbuntu server, claude code was installed, expose API for claude-code-fe project
+database using sqlite
+
